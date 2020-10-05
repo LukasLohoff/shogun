@@ -10,6 +10,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.*;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,7 @@ public abstract class BaseFileController<T extends BaseFileService<?, S>, S exte
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Page<S> findAll(Pageable pageable) {
+    public Page<S> findAll(@PageableDefault(Integer.MAX_VALUE) Pageable pageable) {
         LOG.trace("Requested to return all entities of type {}", getGenericClassName());
 
         try {
