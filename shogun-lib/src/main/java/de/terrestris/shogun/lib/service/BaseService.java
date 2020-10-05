@@ -10,6 +10,9 @@ import de.terrestris.shogun.lib.service.security.permission.UserInstancePermissi
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.history.Revision;
 import org.springframework.data.history.Revisions;
 import org.springframework.data.jpa.domain.Specification;
@@ -44,6 +47,14 @@ public abstract class BaseService<T extends BaseCrudRepository<S, Long> & JpaSpe
     @Transactional(readOnly = true)
     public List<S> findAll() {
         return (List<S>) repository.findAll();
+    }
+
+    // TODO: find a way to make postfilter work
+    // @PreAuthorize("hasRole('ROLE_ADMIN') or hasPermission(filterObject, 'READ')")
+    // @PostFilter("hasRole('ROLE_ADMIN') or hasPermission(filterObject, 'READ')")
+    @Transactional(readOnly = true)
+    public Page<S> findAll(Pageable pageable) {
+        return (Page<S>) repository.findAll(pageable);
     }
 
     @PostFilter("hasRole('ROLE_ADMIN') or hasPermission(filterObject, 'READ')")
