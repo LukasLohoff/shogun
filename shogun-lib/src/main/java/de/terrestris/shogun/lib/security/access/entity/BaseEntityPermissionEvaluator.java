@@ -77,7 +77,7 @@ public abstract class BaseEntityPermissionEvaluator<E extends BaseEntity> implem
         final Set<PermissionType> userClassPermissions = userClassPermissionCol.getPermissions();
 
         // Grant access if user explicitly has the requested permission or
-        // if the group has the ADMIN permission
+        // if the user has the ADMIN permission
         if (userClassPermissions.contains(permission) || userClassPermissions.contains(PermissionType.ADMIN)) {
             LOG.trace("Granting " + permission + " access by user class permissions");
             return true;
